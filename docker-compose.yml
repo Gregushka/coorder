@@ -1,0 +1,51 @@
+services:
+  # PHP-FPM Application Service
+  app:
+    build: . # Tells Docker to build the Dockerfile in this folder
+    container_name: symfony3-app    
+    volumes:
+      # Mounts your code into the container
+      - .:/srv/app
+    environment:
+      # Use this in your Symfony .env.local file
+      DATABASE_URL: "postgresql://symfony:mypassword@db:5432/symfony_db"
+    networks:
+      - npm_network      
+
+  # Nginx Web Server Service
+  web:
+    image: nginx:latest
+    # Give it a predictable name for the proxy to find
+    container_name: symfony3-web
+    volumes:
+      # Mounts your code
+      - .:/srv/app
+      # Mounts the nginx config we just made
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    # IMPORTANT: This service joins the proxy network
+    networks:
+      - npm_network
+
+  # PostgreSQL Database Service
+  db:
+    image: postgres:18.1
+    container_name: symfony3-db
+    environment:
+      POSTGRES_DB: symfony_db
+      POSTGRES_USER: symfony
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      # This persists your database data on the host machine
+      - symfony3_db_data:/var/lib/postgresql
+    networks:
+      - npm_network             
+
+volumes:
+  symfony3_db_data: # Declares the named volume
+
+# This stack uses its own 'default' network AND the external 'npm_network'
+networks:
+  npm_network:
+    external: true
