@@ -36,6 +36,8 @@ services:
       POSTGRES_DB: symfony_db
       POSTGRES_USER: symfony
       POSTGRES_PASSWORD: mypassword
+    ports:
+        - "5432:5432"      
     volumes:
       # This persists your database data on the host machine
       - symfony3_db_data:/var/lib/postgresql

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Load Files</h2>
+                
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fileInput" class="form-label">Open file</label>
+                            <input class="form-control" type="file" id="fileInput">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="actionSelect" class="form-label">Action</label>
+                            <select class="form-select" id="actionSelect">
+                                <option selected>Choose action...</option>
+                                <option value="1">Process</option>
+                                <option value="2">Analyze</option>
+                                <option value="3">Export</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-primary">Go</button>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="button" class="btn btn-success">Save subtitles</button>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label for="interval" class="form-label">Interval</label>
+                            <input type="text" class="form-control" id="interval" placeholder="Enter interval">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="precision" class="form-label">Precision</label>
+                            <input type="text" class="form-control" id="precision" placeholder="Enter precision">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="algorithm" class="form-label">Algorithm</label>
+                            <input type="text" class="form-control" id="algorithm" placeholder="Enter algorithm">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

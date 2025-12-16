@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Settings</h2>
+                
+                {{ form_start(form) }}
+                
+                <div class="row">
+                    <!-- First Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form_row(form.interval, {
+                                'attr': {'class': 'form-control'},
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_row(form.period, {
+                                'attr': {'class': 'form-control'},
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_row(form.latitude, {
+                                'attr': {'class': 'form-control'},
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_row(form.longitude, {
+                                'attr': {'class': 'form-control'},
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                    </div>
+                    
+                    <!-- Second Column -->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form_row(form.radio_choice, {
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_row(form.fresh, {
+                                'row_attr': {'class': 'form-check'}
+                            }) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_row(form.date_range, {
+                                'row_attr': {'class': 'form-group'}
+                            }) }}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

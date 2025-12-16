@@ -1,17 +1,93 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Skies Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+            color: #e0e1dd;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: rgba(13, 27, 42, 0.95);
+            border-bottom: 2px solid #415a77;
+        }
+        .sidebar {
+            background: rgba(26, 35, 56, 0.9);
+            min-height: calc(100vh - 76px);
+            padding: 20px 0;
+            border-right: 1px solid #415a77;
+        }
+        .sidebar .btn {
+            width: 100%;
+            margin-bottom: 10px;
+            background: #415a77;
+            border: none;
+            color: #e0e1dd;
+            text-align: left;
+            padding: 12px 20px;
+        }
+        .sidebar .btn:hover {
+            background: #778da9;
+            color: #0d1b2a;
+        }
+        .content-area {
+            padding: 30px;
+            background: rgba(224, 225, 221, 0.05);
+            min-height: calc(100vh - 76px);
+        }
+        .card {
+            background: rgba(26, 35, 56, 0.8);
+            border: 1px solid #415a77;
+            color: #e0e1dd;
+        }
+        .form-control, .form-select {
+            background: rgba(13, 27, 42, 0.8);
+            border: 1px solid #415a77;
+            color: #e0e1dd;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(13, 27, 42, 0.9);
+            border-color: #778da9;
+            color: #e0e1dd;
+        }
+        .table {
+            color: #e0e1dd;
+        }
+        .table-dark {
+            --bs-table-bg: rgba(26, 35, 56, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">🌌 Night Skies Observatory</span>
+        </div>
+    </nav>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Menu -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <div class="d-flex flex-column">
+                    <a href="{{ path('app_main') }}" class="btn">🏠 Main</a>
+                    <a href="{{ path('app_load_files') }}" class="btn">📁 Load Files</a>
+                    <a href="{{ path('app_list_files') }}" class="btn">📊 List Files</a>
+                    <a href="{{ path('app_settings') }}" class="btn">⚙️ Settings</a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 content-area">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
