@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\MediaCard;
+use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<MediaCard>
+ * @extends ServiceEntityRepository<Trip>
  */
-class MediaCardRepository extends ServiceEntityRepository
+class TripRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, MediaCard::class);
+        parent::__construct($registry, Trip::class);
     }
 
     //    /**
-    //     * @return MediaCard[] Returns an array of MediaCard objects
+    //     * @return Trip[] Returns an array of Trip objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class MediaCardRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?MediaCard
+    //    public function findOneBySomeField($value): ?Trip
     //    {
     //        return $this->createQueryBuilder('m')
     //            ->andWhere('m.exampleField = :val')

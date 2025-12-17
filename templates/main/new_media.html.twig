@@ -49,4 +49,80 @@
 {% block body %}
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="h4 mb-0">Add Media File</h2>
+                    <a href="{{ path('app_list_media', {'id': trip.id}) }}" class="btn btn-sm btn-outline-secondary">
+                        Back to Media List
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>Trip:</strong> {{ trip.name }} ({{ trip.dateBegin|date('Y-m-d') }} to {{ trip.dateEnd|date('Y-m-d') }})
+                    </div>
+
+                    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    
+                    <div class="mb-3">
+                        {{ form_label(form.userMediaName) }}
+                        {{ form_widget(form.userMediaName, {'attr': {'class': 'form-control' ~ (form.userMediaName.vars.errors|length ? ' is-invalid' : '')}}) }}
+                        {% if form.userMediaName.vars.errors %}
+                            <div class="form-error">
+                                {{ form_errors(form.userMediaName) }}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Optional: Give this media a custom name</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form_label(form.file) }}
+                        <div class="file-input-container">
+                            {{ form_widget(form.file, {'attr': {'class': 'form-control' ~ (form.file.vars.errors|length ? ' is-invalid' : '')}}) }}
+                            <label class="file-input-label">
+                                <i class="bi bi-upload"></i> Choose File
+                            </label>
+                        </div>
+                        <div class="file-name" id="fileName">No file chosen</div>
+                        {% if form.file.vars.errors %}
+                            <div class="form-error">
+                                {{ form_errors(form.file) }}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Upload an XML media profile file or other media file (max 50MB). 
+                            Supported formats: XML, JPEG, PNG, MP4
+                        </small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ path('app_list_media', {'id': trip.id}) }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Media</button>
+                    </div>
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.querySelector('input[type="file"]');
+            const fileNameDisplay = document.getElementById('fileName');
+            
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+        });
+    </script>
+{% endblock %}

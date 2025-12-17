@@ -58,6 +58,9 @@ class MediaCard
 	
 	#[ORM\OneToMany(mappedBy: 'mediaCard', targetEntity: LogfileDataEntry::class)]
 	private Collection $logfileDataEntries;
+	
+	#[ORM\OneToMany(mappedBy: 'mediaCard', targetEntity: AttachedFile::class)]
+    private Collection $attachedFiles;	
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;	
@@ -264,4 +267,34 @@ class MediaCard
 
         return $this;
     }	
+	
+	/**
+	 * @return Collection<int, AttachedFile>
+	 */
+	public function getAttachedFiles(): Collection
+	{
+		return $this->attachedFiles;
+	}
+
+	public function addAttachedFile(AttachedFile $attachedFile): static
+	{
+		if (!$this->attachedFiles->contains($attachedFile)) {
+			$this->attachedFiles->add($attachedFile);
+			$attachedFile->setMediaCard($this);
+		}
+
+		return $this;
+	}
+
+	public function removeAttachedFile(AttachedFile $attachedFile): static
+	{
+		if ($this->attachedFiles->removeElement($attachedFile)) {
+			if ($attachedFile->getMediaCard() === $this) {
+				$attachedFile->setMediaCard(null);
+			}
+		}
+
+		return $this;
+	}	
+	
 }

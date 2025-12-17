@@ -28,7 +28,6 @@ final class MainController extends AbstractController
     public function index(TripRepository $tripRepository): Response
     {
         $trips = $tripRepository->findAll();
-        
         return $this->render('main/index.html.twig', [
             'trips' => $trips,
         ]);
@@ -40,7 +39,6 @@ final class MainController extends AbstractController
         $trip = new Trip();
         $form = $this->createForm(TripType::class, $trip);
         $form->handleRequest($request);
-
         return $this->render('main/new_trip.html.twig', [
             'form' => $form->createView(),
         ]);

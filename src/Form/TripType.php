@@ -9,7 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -40,7 +39,7 @@ class TripType extends AbstractType
                     new NotBlank(['message' => 'Start date is required.']),
                 ],
                 'attr' => [
-                    'class' => 'form-control datepicker',
+                    'class' => 'form-control',
                 ],
             ])
             ->add('dateEnd', DateType::class, [
@@ -51,7 +50,7 @@ class TripType extends AbstractType
                     new NotBlank(['message' => 'End date is required.']),
                 ],
                 'attr' => [
-                    'class' => 'form-control datepicker',
+                    'class' => 'form-control',
                 ],
             ])
             ->add('description', TextareaType::class, [
