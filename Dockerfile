@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
 	libcurl4-openssl-dev \
+	libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
     unzip \
     git \
     && rm -rf /var/lib/apt/lists/*
@@ -19,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install PHP extensions required by Symfony and PostgreSQL
 # Note: pdo is usually installed by default, but pdo_pgsql needs the libpq-dev package
-RUN docker-php-ext-install pdo_pgsql zip intl curl opcache
+RUN docker-php-ext-install pdo_pgsql zip intl curl opcache mbstring gd exif
 
 # Force PHP-FPM to listen on all interfaces (0.0.0.0)
 # This is crucial for Nginx in another container to connect.

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Media for Trip: {{ trip.name }}</h2>
+        <div>
+            <a href="{{ path('app_new_media', {id: trip.id}) }}" class="btn btn-primary">Add Media</a>
+            <a href="{{ path('app_main') }}" class="btn btn-secondary">Back to Trips</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Media ID</th>
+                <th>Created</th>
+                <th>Trip Name</th>
+                <th>Logs</th>
+                <th>Videos</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for media in mediaCards %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_edit_media', {id: media.id}) }}">
+                        {{ media.mediaId }}
+                    </a>
+                </td>
+                <td>{{ media.mediaCreated|date('Y-m-d H:i:s') }}</td>
+                <td>{{ trip.name }}</td>
+                <td>{{ media.logfileDataEntries|length }}</td>
+                <td>{{ media.videoFileDatas|length }}</td>
+                <td>
+                     <a href="{{ path('app_edit_media', {id: media.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6" class="text-center">No media found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

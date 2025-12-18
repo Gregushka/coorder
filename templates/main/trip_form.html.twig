@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2>{{ title }}</h2>
+
+    {# Display specific field errors in red text under fields automatically via form_row #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    <div class="mb-3">
+        {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.dateBegin, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.dateEnd, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="mb-3">
+        {{ form_row(form.description, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Save</button>
+
+        {% if is_edit %}
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#discardModal">Discard</button>
+        {% else %}
+            <a href="{{ path('app_main') }}" class="btn btn-secondary">Cancel</a>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+</div>
+
+{% if is_edit %}
+<div class="modal fade" id="discardModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Discard</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to discard changes?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <a href="{{ path('app_main') }}" class="btn btn-danger">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

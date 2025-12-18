@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-4">
+    <h2>Add New Media</h2>
+    
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+    
+    <div class="mb-3">
+        {{ form_row(form.file, {'attr': {'class': 'form-control'}}) }}
+        <small class="text-muted">Upload the XML profile.</small>
+    </div>
+    
+    <div class="mb-3">
+        {{ form_row(form.userMediaName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="{{ path('app_list_media', {id: trip.id}) }}" class="btn btn-secondary">Cancel</a>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
