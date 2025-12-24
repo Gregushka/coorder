@@ -53,9 +53,6 @@ class MediaCard
     #[ORM\JoinColumn(nullable: false)]
     private ?Trip $trip = null;
 
-    #[ORM\OneToMany(mappedBy: 'mediaCard', targetEntity: VideoFileData::class)]
-    private Collection $videoFileDatas;
-	
 	#[ORM\OneToMany(mappedBy: 'mediaCard', targetEntity: LogfileDataEntry::class)]
 	private Collection $logfileDataEntries;
 	
@@ -68,7 +65,6 @@ class MediaCard
     public function __construct()
     {
         $this->heavyName = Uuid::v4()->toRfc4122();
-        $this->videoFileDatas = new ArrayCollection();
 		$this->logfileDataEntries = new ArrayCollection();
     }
 
@@ -197,36 +193,7 @@ class MediaCard
         $this->trip = $trip;
         return $this;
     }
-
-    /**
-     * @return Collection<int, VideoFileData>
-     */
-    public function getVideoFileDatas(): Collection
-    {
-        return $this->videoFileDatas;
-    }
-
-    public function addVideoFileData(VideoFileData $videoFileData): static
-    {
-        if (!$this->videoFileDatas->contains($videoFileData)) {
-            $this->videoFileDatas->add($videoFileData);
-            $videoFileData->setMediaCard($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVideoFileData(VideoFileData $videoFileData): static
-    {
-        if ($this->videoFileDatas->removeElement($videoFileData)) {
-            // set the owning side to null (unless already changed)
-            if ($videoFileData->getMediaCard() === $this) {
-                $videoFileData->setMediaCard(null);
-            }
-        }
-
-        return $this;
-    }
+    
 	/**
 	 * @return Collection<int, LogfileDataEntry>
 	 */

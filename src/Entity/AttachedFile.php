@@ -55,6 +55,12 @@ class AttachedFile
     #[ORM\JoinColumn(nullable: false)]
     private ?MediaCard $mediaCard = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $fileInfo = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $serviceInfo = null;
+
     public function __construct()
     {
         $this->heavyName = Uuid::v4()->toRfc4122();
@@ -228,5 +234,29 @@ class AttachedFile
     public function getBasename(): string
     {
         return pathinfo($this->name, PATHINFO_FILENAME);
+    }
+
+    public function getFileInfo(): ?array
+    {
+        return $this->fileInfo;
+    }
+
+    public function setFileInfo(?array $fileInfo): static
+    {
+        $this->fileInfo = $fileInfo;
+
+        return $this;
+    }
+
+    public function getServiceInfo(): ?array
+    {
+        return $this->serviceInfo;
+    }
+
+    public function setServiceInfo(?array $serviceInfo): static
+    {
+        $this->serviceInfo = $serviceInfo;
+
+        return $this;
     }
 }

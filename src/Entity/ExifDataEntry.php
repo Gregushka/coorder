@@ -77,10 +77,6 @@ class ExifDataEntry
     #[ORM\Column(type: Types::JSON)]
     private array $permissions = [];
 
-    #[ORM\ManyToOne(targetEntity: VideoFileData::class, inversedBy: 'exifDataEntries')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?VideoFileData $videoFileData = null;
-
     public function __construct()
     {
         $this->heavyName = Uuid::v4()->toRfc4122();
@@ -309,17 +305,6 @@ class ExifDataEntry
     public function setPermissions(array $permissions): static
     {
         $this->permissions = $permissions;
-        return $this;
-    }
-
-    public function getVideoFileData(): ?VideoFileData
-    {
-        return $this->videoFileData;
-    }
-
-    public function setVideoFileData(?VideoFileData $videoFileData): static
-    {
-        $this->videoFileData = $videoFileData;
         return $this;
     }
 }
