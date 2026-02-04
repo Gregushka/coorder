@@ -17,7 +17,6 @@
                 <th>Created</th>
                 <th>Trip Name</th>
                 <th>Logs</th>
-                <th>Videos</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -32,7 +31,6 @@
                 <td>{{ media.mediaCreated|date('Y-m-d H:i:s') }}</td>
                 <td>{{ trip.name }}</td>
                 <td>{{ media.logfileDataEntries|length }}</td>
-                <td>{{ media.videoFileDatas|length }}</td>
                 <td>
                      <a href="{{ path('app_edit_media', {id: media.id}) }}" class="btn btn-sm btn-warning">Edit</a>
                 </td>

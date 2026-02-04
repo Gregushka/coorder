@@ -24,6 +24,8 @@ class MediaImportService
      */
     public function importMedia(UploadedFile $file, Trip $trip, ?string $userMediaName): void
     {
+        // ... (File upload logic remains the same) ...
+        
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
         $newFilename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
@@ -53,7 +55,8 @@ class MediaImportService
         $exifData = @exif_read_data($fullPath);
         $attachedFile->setExif($exifData ?: []);
 
-        // 3. Parse XML and Create MediaCard Entity
+        // ... (XML Parsing Logic) ...
+
         $xmlContent = file_get_contents($fullPath);
         $xml = simplexml_load_string($xmlContent);
 
@@ -84,20 +87,40 @@ class MediaImportService
             $mediaCard->setMediaName((string)$xml->Properties->Attached['mediaName']);
         }
 
-        // Accessing Contents
+        // --- UPDATED CONTENTS PARSING ---
         $contents = [];
         if (isset($xml->Contents->Material)) {
             foreach ($xml->Contents->Material as $material) {
-                $contents[] = [
-                    'uri' => (string)$material['uri'],
-                    'type' => (string)$material['type'],
-                    'videoType' => (string)$material['videoType'],
-                    'dur' => (string)$material['dur'],
-                    'umid' => (string)$material['umid'],
+                // 1. Capture ALL attributes of the Material tag
+                $materialItem = [
+                    'uri'         => (string)$material['uri'],
+                    'type'        => (string)$material['type'],
+                    'videoType'   => (string)$material['videoType'],
+                    'audioType'   => (string)$material['audioType'],
+                    'fps'         => (string)$material['fps'],
+                    'dur'         => (string)$material['dur'],
+                    'ch'          => (string)$material['ch'],
+                    'aspectRatio' => (string)$material['aspectRatio'],
+                    'offset'      => (string)$material['offset'],
+                    'umid'        => (string)$material['umid'],
+                    'relevantInfo'=> [] // Placeholder for nested children
                 ];
+
+                // 2. Iterate through nested RelevantInfo children
+                if (isset($material->RelevantInfo)) {
+                    foreach ($material->RelevantInfo as $info) {
+                        $materialItem['relevantInfo'][] = [
+                            'uri'  => (string)$info['uri'],
+                            'type' => (string)$info['type'],
+                        ];
+                    }
+                }
+
+                $contents[] = $materialItem;
             }
         }
         $mediaCard->setContents($contents);
+        // ---------------------------------
 
         // 4. Persist Relations
         $attachedFile->setMediaCard($mediaCard);
